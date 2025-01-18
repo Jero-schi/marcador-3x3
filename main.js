@@ -6,6 +6,7 @@ let gameTime = 10 * 60; // 10 minutos en segundos
 let shotTime = 12; // 12 segundos
 let scores = { A: 0, B: 0 };
 let fouls = { A: 0, B: 0 };
+const bocina = new Audio('./bocinaaa.mp3')
 
 // Actualizar los elementos del DOM
 function updateDisplay() {
@@ -23,6 +24,12 @@ function formatTime(seconds) {
   const secs = seconds % 60;
   return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
 }
+
+function verificarRelojPosicion() {
+    if (tiempoPosicion === 0) {
+      bocina.play(); // Reproduce el sonido
+    }
+  }
 
 function toggleGameTimer() {
     const button = document.getElementById("gameTimerButton");
@@ -49,6 +56,7 @@ function startGameTimer() {
       if (gameTime > 0) {
         gameTime--;
       } else {
+        verificarRelojPosicion()
         clearInterval(gameTimerInterval);
         alert("Fin del cuarto");
         const button = document.getElementById("gameTimerButton");
@@ -85,6 +93,7 @@ function toggleGameTimer() {
       if (shotTime > 0) {
         shotTime--;
       } else {
+        bocina.play()
         clearInterval(shotClockInterval); // Detenemos el intervalo cuando llega a 0
         resetShotClock(false); // Reinicia el reloj sin arrancarlo automáticamente
       }
